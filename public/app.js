@@ -1,4 +1,4 @@
-// claudeX — your AI session launches a rocket that climbs the whole turn (each
+// Prompt Rocket — your AI session launches a rocket that climbs the whole turn (each
 // tool = thrust). Altitude is shown in REAL km. The ending depends on the real
 // altitude reached when the turn ends (alt(c) ≈ 7c + 0.175c² km for c combos):
 //   < GEO: retro-burn landing · >=35,786 km (GEO): deploy satellites + land
@@ -15,13 +15,13 @@ const fmt = (km) => Math.round(km).toLocaleString('en-US') + ' km';
 
 // real-altitude milestones (km)
 const ZONES = [
-  { alt: 0,     name: '🌍 발사대',              sky: 0xaedcff },
-  { alt: 12,    name: '☁️ 대류권 통과',          sky: 0x86c1ee },
-  { alt: 50,    name: '🌤 성층권',              sky: 0x3f6fa8 },
-  { alt: 100,   name: '🚀 카르만선 돌파 — 우주!',  sky: 0x05060d },
-  { alt: 408,   name: '🛰 저궤도 (ISS 고도)',     sky: 0x03040a },
-  { alt: 550,   name: '📡 스타링크 궤도',         sky: 0x03040a },
-  { alt: 35786, name: '📡 정지궤도 (GEO)',        sky: 0x02030a },
+  { alt: 0,     name: '🌍 Launch pad',            sky: 0xaedcff },
+  { alt: 12,    name: '☁️ Troposphere',           sky: 0x86c1ee },
+  { alt: 50,    name: '🌤 Stratosphere',          sky: 0x3f6fa8 },
+  { alt: 100,   name: '🚀 Kármán line — space!',  sky: 0x05060d },
+  { alt: 408,   name: '🛰 Low Earth orbit (ISS)', sky: 0x03040a },
+  { alt: 550,   name: '📡 Starlink orbit',        sky: 0x03040a },
+  { alt: 35786, name: '📡 Geostationary (GEO)',   sky: 0x02030a },
 ];
 function zoneFor(a) { let z = ZONES[0]; for (const x of ZONES) if (a >= x.alt) z = x; return z; }
 // compress real km → on-screen world height so the rocket stays visible
@@ -120,7 +120,7 @@ function deploySatellites(n, label) {
     s.position.copy(rocket.position);
     s.userData = { vel: [(Math.random()-0.5)*8 + i * 1.2, (Math.random()-0.5)*4, -3-Math.random()*4] }; // spread → train
     scene.add(s); sats.push(s); }
-  toast(label || '🛰 위성 배포!');
+  toast(label || '🛰 Satellites deployed!');
 }
 function touchdownDust() { for (let i = 0; i < 4; i++) spawnPuff(true); }
 
@@ -148,7 +148,7 @@ function startTransit(kind) {                    // moon/mars: counter ramps to 
   st.maxAlt = st.alt; st.ending = kind; st.phase = 'transit';
   st.tr = { from: st.alt, to: kind === 'mars' ? MARS_KM : MOON_KM, t: 0, wy: kind === 'mars' ? MARS_WY : MOON_WY };
   if (st.isDemo) st.comboRamp = { from: st.combo, to: combosFor(st.tr.to) }; // demo: combo counter fills to the real requirement
-  toast(kind === 'mars' ? '🔴 화성으로 전이...' : '🌙 달로 전이...');
+  toast(kind === 'mars' ? '🔴 Trans-Mars injection...' : '🌙 Trans-lunar injection...');
 }
 function endTurn() {
   if (st.phase !== 'climb') return;
@@ -161,31 +161,31 @@ function endTurn() {
     st.ending = st.maxAlt >= 35786 ? 'satellite' : 'retro';   // GEO → deploy
     if (st.demoEnding) st.ending = st.demoEnding;             // themed demo override
     if (st.ending === 'satellite') deploySatellites(3);
-    else if (st.ending === 'starlink') deploySatellites(6, '📡 스타링크 위성 6기 배포!'); // satellite train
+    else if (st.ending === 'starlink') deploySatellites(6, '📡 Starlink train: 6 satellites away!'); // satellite train
     const seaLanding = st.maxAlt >= 100;        // reached space → droneship downrange; else RTLS
     st.landX = seaLanding ? SHIP_X : 0; st.landY = 2.4;
     if (seaLanding) { droneship.visible = dpad.visible = true; }
     legs.visible = true;
-    st.dsc = { t: 0, dur: 7, fromWY: rocket.position.y, fromX: rocket.position.x, site: seaLanding ? '드론십 해상' : '발사장 RTLS' };
+    st.dsc = { t: 0, dur: 7, fromWY: rocket.position.y, fromX: rocket.position.x, site: seaLanding ? 'DRONESHIP' : 'RTLS PAD' };
     st.phase = 'descent'; setBadge('🛬 BOOSTBACK — ' + st.dsc.site);
   }
 }
-const ENDING = { retro: '🚀 역추진 착륙 성공', satellite: '🛰 위성 배포 + 착륙', moon: '🌙 달 착륙', mars: '🔴 화성 착륙',
-  iss: '🛰 ISS 고도 도달 + 귀환 착륙', starlink: '📡 스타링크 배포 + 귀환 착륙' };
+const ENDING = { retro: '🚀 Boostback landing', satellite: '🛰 Satellites deployed + landed', moon: '🌙 Moon landing', mars: '🔴 Mars landing',
+  iss: '🛰 Reached ISS altitude + returned', starlink: '📡 Starlink train deployed + returned' };
 function beginPlanetLanding(kind) {              // hard cut to the surface scene, then a real powered landing
   const s = SITES[kind];
   rocket.position.set(s.x, s.y + 92, 0);
   camera.position.set(s.x + 6, s.y + 80, 26);
   legs.visible = true; droneship.visible = dpad.visible = false;
   st.planet = kind; st.landX = s.x; st.landY = s.y + 2.4;
-  st.dsc = { t: 0, dur: 8, fromWY: s.y + 92, fromX: s.x, site: kind === 'mars' ? '화성 표면' : '달 표면' };
-  st.phase = 'descent'; setBadge('🛬 착륙 버닝 — ' + st.dsc.site);
-  toast(kind === 'mars' ? '🔴 화성 궤도 진입' : '🌙 달 궤도 진입');
+  st.dsc = { t: 0, dur: 8, fromWY: s.y + 92, fromX: s.x, site: kind === 'mars' ? 'MARS SURFACE' : 'LUNAR SURFACE' };
+  st.phase = 'descent'; setBadge('🛬 LANDING BURN — ' + st.dsc.site);
+  toast(kind === 'mars' ? '🔴 Mars orbit insertion' : '🌙 Lunar orbit insertion');
 }
 function finish() {
   st.phase = 'done'; setBadge('🏁 ' + ENDING[st.ending]); SFX.land();
   if (!st.isDemo)   // demo flights are not recorded
-    fetch('/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'landed', glider: 'claudeX', distance: Math.round(st.maxAlt) }) });
+    fetch('/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'landed', glider: 'rocket', distance: Math.round(st.maxAlt) }) });
   showOverlay(Math.round(st.maxAlt), ENDING[st.ending]);
 }
 
@@ -257,13 +257,13 @@ let toastTimer = null;
 function toast(txt) { const t = el('toast'); if (!t) return; t.textContent = txt; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2200); }
 async function refreshBoard(highlight) {
   const lb = await (await fetch('/leaderboard')).json();
-  el('board').innerHTML = '<b>🚀 TOP 5 고도</b>' + (lb.slice(0, 5).map((r, i) =>
-    `<div class="row${highlight && r.distance === highlight && i === lb.findIndex(x => x.distance === highlight) ? ' hot' : ''}">${i + 1}. 🚀 ${Number(r.distance).toLocaleString('en-US')} km</div>`).join('') || '<div class="row">아직 없음</div>');
+  el('board').innerHTML = '<b>🚀 TOP 5 ALTITUDE</b>' + (lb.slice(0, 5).map((r, i) =>
+    `<div class="row${highlight && r.distance === highlight && i === lb.findIndex(x => x.distance === highlight) ? ' hot' : ''}">${i + 1}. 🚀 ${Number(r.distance).toLocaleString('en-US')} km</div>`).join('') || '<div class="row">No flights yet</div>');
 }
 function showOverlay(alt, endTxt) {
   el('ovDist').textContent = fmt(alt); el('ovZone').textContent = endTxt;
-  if (st.isDemo) { el('ovNew').textContent = '🧪 데모 비행 — 기록 제외'; refreshBoard(); }
-  else refreshBoard(alt).then(() => fetch('/leaderboard').then(r => r.json()).then(lb => { const best = Math.max(0, ...lb.map(x => x.distance)); el('ovNew').textContent = alt >= best ? '🎉 최고 고도 신기록!' : ''; }));
+  if (st.isDemo) { el('ovNew').textContent = '🧪 Demo flight — not recorded'; refreshBoard(); }
+  else refreshBoard(alt).then(() => fetch('/leaderboard').then(r => r.json()).then(lb => { const best = Math.max(0, ...lb.map(x => x.distance)); el('ovNew').textContent = alt >= best ? '🎉 New altitude record!' : ''; }));
   el('overlay').classList.remove('hidden');
 }
 function demo() {

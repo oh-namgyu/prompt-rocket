@@ -1,41 +1,41 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>claudeX 🚀</title>
+  <title>Prompt Rocket 🚀</title>
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <div id="scene"></div>
 
   <div class="hud tl">
-    <div class="label">claudeX · 고도</div>
+    <div class="label">Prompt Rocket · altitude</div>
     <div class="big"><span id="dist">0 km</span></div>
-    <div class="sub"><span id="alt">🌍 발사대</span></div>
+    <div class="sub"><span id="alt">🌍 Launch pad</span></div>
   </div>
   <div class="hud tr">
     <div class="big"><span id="combo">×0</span></div>
-    <div class="sub">콤보 (도구 호출)</div>
+    <div class="sub">combo (tool calls)</div>
   </div>
 
   <div id="badge" class="badge">READY</div>
   <div id="toast" class="toast"></div>
   <div class="demos">
-    <button id="demoBtn" class="btn">데모 발사 ▶</button>
-    <button class="btn mini" data-demo="iss">🛰 ISS 408km</button>
-    <button class="btn mini" data-demo="starlink">📡 스타링크 550km</button>
-    <button class="btn mini" data-demo="moon">🌙 달 384,400km</button>
-    <button class="btn mini" data-demo="mars">🔴 화성 2.25억km</button>
+    <button id="demoBtn" class="btn">Demo launch ▶</button>
+    <button class="btn mini" data-demo="iss">🛰 ISS 408 km</button>
+    <button class="btn mini" data-demo="starlink">📡 Starlink 550 km</button>
+    <button class="btn mini" data-demo="moon">🌙 Moon 384,400 km</button>
+    <button class="btn mini" data-demo="mars">🔴 Mars 225M km</button>
   </div>
   <div id="board" class="panel"></div>
 
   <div id="overlay" class="overlay hidden">
-    <div class="sub">최고 고도</div>
+    <div class="sub">Max altitude</div>
     <div class="total"><span id="ovDist">0 km</span></div>
     <div class="new" id="ovZone"></div>
     <div class="new" id="ovNew"></div>
-    <button id="againBtn" class="btn static">다시</button>
+    <button id="againBtn" class="btn static">Again</button>
   </div>
 
   <script src="/vendor/three.min.js"></script>

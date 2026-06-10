@@ -1,9 +1,9 @@
 #!/bin/sh
-# glide on|off — Prompt Glider 훅 무장/해제 (~/.glide-armed 플래그 토글)
+# glide on|off — arm/disarm the Prompt Rocket hooks (~/.glide-armed flag)
 H=http://127.0.0.1:6030
 case "$1" in
   on)  curl -s -X POST "$H/arm" >/dev/null 2>&1; open "$H/" >/dev/null 2>&1
-       echo "🛩️  glide ARMED — 다음 프롬프트부터 비행. (해제: glide off)" ;;
+       echo "🚀  glide ARMED — your next prompt launches. (glide off to stop)" ;;
   off) curl -s -X POST "$H/disarm" >/dev/null 2>&1; echo "glide disarmed." ;;
   status) curl -s "$H/leaderboard" >/dev/null 2>&1 && echo "server up" || echo "server down"
        [ -f "$HOME/.glide-armed" ] && echo "armed" || echo "disarmed" ;;

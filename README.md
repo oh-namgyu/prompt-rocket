@@ -1,4 +1,4 @@
-# claudeX 🚀 (prompt-glider)
+# Prompt Rocket 🚀
 
 A silly, delightful toy: **your AI coding session launches a Minecraft-style voxel
 Falcon Heavy.** Every tool call the agent makes is engine thrust.
@@ -99,8 +99,6 @@ through the same event path.
 - **Why merged geometry instead of InstancedMesh?** Safari (ANGLE/Metal) renders
   nothing for instanced draws with the vendored Three build — scenery is baked
   into one merged BufferGeometry per group instead (also fewer draw calls).
-- `public/models/` and `public/tex/` are unused legacy assets from the pre-voxel
-  build (GLB Falcon + photo textures). Kept out of git; safe to delete.
 - Leaderboard lives in `data/leaderboard.json` (runtime, git-ignored).
 
 ## License

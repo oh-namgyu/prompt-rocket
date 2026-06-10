@@ -8,7 +8,7 @@ const os = require('os');
 
 const PORT = process.env.PORT || 6030;
 const ROOT = __dirname;
-const ALLOWED_GLIDERS = ['claudeX', 'plane', 'dandelion', 'leaf', 'paper'];
+const ALLOWED_GLIDERS = ['rocket'];
 const PUBLIC = path.join(ROOT, 'public');
 const DATA_DIR = path.join(ROOT, 'data');
 const LEADERBOARD = path.join(DATA_DIR, 'leaderboard.json');
@@ -84,7 +84,7 @@ const server = http.createServer(async (req, res) => {
     // record whenever a numeric distance is present (game posts {type:'landed',distance}
     // on touchdown; turn-end {type:'end'} has no distance and only triggers descent).
     if (typeof ev.distance === 'number') {
-      const glider = ALLOWED_GLIDERS.includes(ev.glider) ? ev.glider : 'plane';  // whitelist: no arbitrary stored field
+      const glider = ALLOWED_GLIDERS.includes(ev.glider) ? ev.glider : 'rocket';  // whitelist: no arbitrary stored field
       ev.leaderboard = saveScore({ glider, distance: Math.round(ev.distance), at: new Date().toISOString() });
     }
     broadcast(ev);
