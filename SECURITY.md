@@ -1,6 +1,6 @@
 # Security Policy
 
-Prompt Glider is a **local-only toy**. The event server binds to `127.0.0.1`,
+Prompt Rocket is a **local-only toy**. The event server binds to `127.0.0.1`,
 stores no secrets, and requires no authentication.
 
 ## Scope notes

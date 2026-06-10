@@ -1,4 +1,4 @@
-// Prompt Glider — local event server (Node 22, zero deps).
+// Prompt Rocket — local event server (Node 22, zero deps).
 // Activity events (from Claude Code hooks or manual/demo POST) → SSE → 3D page.
 'use strict';
 const http = require('http');
@@ -102,4 +102,4 @@ const server = http.createServer(async (req, res) => {
   serveStatic(req, res);
 });
 
-server.listen(PORT, '127.0.0.1', () => console.log(`prompt-glider on http://127.0.0.1:${PORT} (armed=${fs.existsSync(ARM_FLAG)})`));
+server.listen(PORT, '127.0.0.1', () => console.log(`prompt-rocket on http://127.0.0.1:${PORT} (armed=${fs.existsSync(ARM_FLAG)})`));
