@@ -1,0 +1,5 @@
+data/leaderboard.json
+# legacy assets from the pre-voxel build (GLB model + photo textures, unused)
+public/models/
+public/tex/
+.DS_Store
