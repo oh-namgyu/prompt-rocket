@@ -3,6 +3,12 @@
 A silly, delightful toy: **your AI coding session launches a Minecraft-style voxel
 Falcon Heavy.** Every tool call the agent makes is engine thrust.
 
+[**▶ Live demo**](https://oh-namgyu.github.io/prompt-rocket/) — the demo-launch
+buttons run entirely in your browser (the optional leaderboard needs the local
+server, and degrades gracefully without it).
+
+![Prompt Rocket](assets/screenshot.png)
+
 Send a prompt → the rocket ignites on a voxel launch site (grass blocks, block
 mountains, a town, a beach and a sea). Each tool use adds a combo and ~7 km of
 altitude (accelerating). When the turn ends, the ending depends on the **real
