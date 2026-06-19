@@ -1,5 +1,10 @@
 # Prompt Rocket 🚀
 
+[![CI](https://github.com/oh-namgyu/prompt-rocket/actions/workflows/ci.yml/badge.svg)](https://github.com/oh-namgyu/prompt-rocket/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/oh-namgyu/prompt-rocket)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/oh-namgyu/prompt-rocket)](https://github.com/oh-namgyu/prompt-rocket/releases)
+
+
 A silly, delightful toy: **your AI coding session launches a Minecraft-style voxel
 Falcon Heavy.** Every tool call the agent makes is engine thrust.
 
