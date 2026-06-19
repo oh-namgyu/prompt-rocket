@@ -8,6 +8,8 @@
 A silly, delightful toy: **your AI coding session launches a Minecraft-style voxel
 Falcon Heavy.** Every tool call the agent makes is engine thrust.
 
+![Prompt Rocket](assets/screenshot.png)
+
 [**▶ Live demo**](https://oh-namgyu.github.io/prompt-rocket/) — the demo-launch
 buttons run entirely in your browser (the optional leaderboard needs the local
 server, and degrades gracefully without it).
