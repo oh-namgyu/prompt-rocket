@@ -5,5 +5,8 @@
   "license": "MIT",
   "private": true,
   "engines": { "node": ">=18" },
-  "scripts": { "start": "node server.js" }
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --check server.js && node --check public/app.js && node --check public/voxel.js && node --check public/audio.js && echo 'syntax check passed'"
+  }
 }
