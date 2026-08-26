@@ -5,6 +5,8 @@
 [![Release](https://img.shields.io/github/v/release/oh-namgyu/prompt-rocket)](https://github.com/oh-namgyu/prompt-rocket/releases)
 
 
+> **한글 요약** — 브라우저에서 즐기는 복셀 로켓 발사 토이입니다(Three.js) — 차지하고, 발사하고, 나만의 팔콘이 날아가는 걸 구경하세요.
+
 A silly, delightful toy: **your AI coding session launches a Minecraft-style voxel
 Falcon Heavy.** Every tool call the agent makes is engine thrust.
 
