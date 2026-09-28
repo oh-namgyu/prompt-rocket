@@ -40,10 +40,12 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.glb': 'model/gltf-binary' };
 
 function serveStatic(req, res) {
-  let rel = decodeURIComponent(req.url.split('?')[0]);
+  let rel;
+  try { rel = decodeURIComponent(req.url.split('?')[0]); } catch { rel = null; }
+  if (rel === null || rel.includes('\0')) { res.writeHead(400); return res.end('bad request'); }
   if (rel === '/') rel = '/index.html';
   const fp = path.normalize(path.join(PUBLIC, rel));
-  if (!fp.startsWith(PUBLIC)) { res.writeHead(403); return res.end('forbidden'); } // path-traversal guard
+  if (!fp.startsWith(PUBLIC + path.sep)) { res.writeHead(403); return res.end('forbidden'); } // path-traversal guard
   fs.readFile(fp, (err, buf) => {
     if (err) { res.writeHead(404); return res.end('not found'); }
     res.writeHead(200, {
@@ -83,7 +85,7 @@ const server = http.createServer(async (req, res) => {
     try { ev = JSON.parse((await readBody(req)) || '{}'); } catch { ev = {}; }
     // record whenever a numeric distance is present (game posts {type:'landed',distance}
     // on touchdown; turn-end {type:'end'} has no distance and only triggers descent).
-    if (typeof ev.distance === 'number') {
+    if (Number.isFinite(ev.distance)) {
       const glider = ALLOWED_GLIDERS.includes(ev.glider) ? ev.glider : 'rocket';  // whitelist: no arbitrary stored field
       ev.leaderboard = saveScore({ glider, distance: Math.round(ev.distance), at: new Date().toISOString() });
     }

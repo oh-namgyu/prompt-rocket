@@ -13,7 +13,4 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - run: node --check server.js
-      - run: node --check public/app.js
-      - run: node --check public/voxel.js
-      - run: node --check public/audio.js
+      - run: npm test
