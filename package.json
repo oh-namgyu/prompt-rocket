@@ -1,6 +1,6 @@
 {
   "name": "prompt-rocket",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Your AI coding session launches a Minecraft-style voxel Falcon Heavy — every tool call is thrust",
   "license": "MIT",
   "private": true,
